@@ -8,11 +8,12 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class DataGenerator:
-    def __init__(self, file_path="historico_cedis.csv"):
+    def __init__(self, file_path="historico_cedis.csv", dias=30):
         """
-        Inicializa la clase generadora de datos logísticos.
+        Inicializa la clase generadora de datos logísticos aceptando 'file_path' y 'dias'.
         """
         self.file_path = file_path
+        self.dias = dias
         self.data = None
 
     def load_base_data(self):
@@ -28,15 +29,13 @@ class DataGenerator:
                 logger.error(f"Error al leer el archivo CSV: {str(e)}")
                 raise e
         else:
-            # Si el archivo no se encuentra, genera un DataFrame vacío estructurado de respaldo
             logger.warning(f"Archivo {self.file_path} no encontrado. Creando respaldo vacío.")
             self.data = pd.DataFrame(columns=["fecha", "cedis", "demanda", "sku", "tiempo_entrega"])
             return self.data
 
     def generate_synthetic_data(self, num_rows=100):
         """
-        Genera filas de datos sintéticos basados en la distribución u operaciones 
-        necesarias para los modelos predictivos del SAT-ML SCM.
+        Genera filas de datos sintéticos basados en la distribución de la app.
         """
         if self.data is None or self.data.empty:
             self.load_base_data()
@@ -55,7 +54,7 @@ class DataGenerator:
 
     def get_features_and_targets(self):
         """
-        Prepara los conjuntos de datos limpios para enviarlos a evaluate.py o app.py
+        Prepara los conjuntos de datos limpios para enviarlos a app.py
         """
         if self.data is None:
             self.load_base_data()
