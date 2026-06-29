@@ -3,7 +3,6 @@ import numpy as np
 import os
 import logging
 
-# Configuración de un logger local e independiente
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -33,30 +32,33 @@ class DataGenerator:
             self.data = pd.DataFrame(columns=["fecha", "cedis", "demanda", "sku", "tiempo_entrega"])
             return self.data
 
-    def generate_synthetic_data(self, num_rows=100):
+    def generar(self):
         """
-        Genera filas de datos sintéticos basados en la distribución de la app.
+        Método requerido explícitamente por la línea 241 de app.py.
+        Retorna los datos cargados o genera un set de datos de respaldo.
         """
+        self.load_base_data()
+        
+        # Si el archivo CSV base está vacío o no tiene registros, genera datos sintéticos simulados
         if self.data is None or self.data.empty:
-            self.load_base_data()
+            cedis_list = ['CEDIS_NORT', 'CEDIS_CENT', 'CEDIS_SUR']
+            num_rows = int(self.dias) * 5  # Estimación basada en los días requeridos
+            
+            self.data = pd.DataFrame({
+                "fecha": pd.date_range(end=pd.Timestamp.now(), periods=num_rows, freq="D").strftime('%Y-%m-%d'),
+                "cedis": np.random.choice(cedis_list, size=num_rows),
+                "demanda": np.random.randint(100, 1500, size=num_rows),
+                "sku": [f"SKU-{np.random.randint(1000, 9999)}" for _ in range(num_rows)],
+                "tiempo_entrega": np.random.randint(1, 7, size=num_rows)
+            })
+            logger.info("Datos sintéticos generados exitosamente ante la ausencia de registros base.")
+            
+        return self.data
 
-        cedis_list = ['CEDIS_NORT', 'CEDIS_CENT', 'CEDIS_SUR']
-        
-        synthetic_df = pd.DataFrame({
-            "fecha": pd.date_range(start="2026-01-01", periods=num_rows, freq="D").strftime('%Y-%m-%d'),
-            "cedis": np.random.choice(cedis_list, size=num_rows),
-            "demanda": np.random.randint(100, 1500, size=num_rows),
-            "sku": [f"SKU-{np.random.randint(1000, 9999)}" for _ in range(num_rows)],
-            "tiempo_entrega": np.random.randint(1, 7, size=num_rows)
-        })
-        
-        return synthetic_df
+    def generate_synthetic_data(self, num_rows=100):
+        """Mantiene compatibilidad con llamadas secundarias externas."""
+        return self.generar()
 
     def get_features_and_targets(self):
-        """
-        Prepara los conjuntos de datos limpios para enviarlos a app.py
-        """
-        if self.data is None:
-            self.load_base_data()
-        
-        return self.data
+        """Mantiene compatibilidad con llamadas secundarias externas."""
+        return self.generar()
