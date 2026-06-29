@@ -1,7 +1,11 @@
 import pandas as pd
 import numpy as np
 import os
-from logger import log_error, log_info  # Ajustado al archivo logger.py existente en tu repositorio
+import logging
+
+# Configuración de un logger local e independiente
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 class DataGenerator:
     def __init__(self, file_path="historico_cedis.csv"):
@@ -18,13 +22,14 @@ class DataGenerator:
         if os.path.exists(self.file_path):
             try:
                 self.data = pd.read_csv(self.file_path)
+                logger.info(f"Archivo {self.file_path} cargado exitosamente.")
                 return self.data
             except Exception as e:
-                if 'log_error' in globals():
-                    log_error(f"Error al leer el archivo CSV: {str(e)}")
+                logger.error(f"Error al leer el archivo CSV: {str(e)}")
                 raise e
         else:
             # Si el archivo no se encuentra, genera un DataFrame vacío estructurado de respaldo
+            logger.warning(f"Archivo {self.file_path} no encontrado. Creando respaldo vacío.")
             self.data = pd.DataFrame(columns=["fecha", "cedis", "demanda", "sku", "tiempo_entrega"])
             return self.data
 
@@ -36,7 +41,6 @@ class DataGenerator:
         if self.data is None or self.data.empty:
             self.load_base_data()
 
-        # Simulación de parámetros logísticos estándar si el dataset está vacío
         cedis_list = ['CEDIS_NORT', 'CEDIS_CENT', 'CEDIS_SUR']
         
         synthetic_df = pd.DataFrame({
@@ -56,5 +60,4 @@ class DataGenerator:
         if self.data is None:
             self.load_base_data()
         
-        # Estructura de salida limpia de ejemplo para los gráficos e inferencias de Streamlit
         return self.data
