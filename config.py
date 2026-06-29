@@ -9,7 +9,7 @@ Trabajo de Grado
 Ingeniería de Sistemas
 
 Autor:
-Wilson Andrés Carbajal Barreto
+Wilson Andrés Carvajal Barreto
 
 Versión:
 2.0.0
