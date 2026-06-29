@@ -9,7 +9,7 @@ en Centros de Distribución (CEDIs).
 Trabajo de Grado 3 — Modelos de Innovación
 Ingeniería de Sistemas — Fundación Universitaria Compensar
 
-Autor : Wilson Andrés Carbajal Barreto
+Autor : Wilson Andrés Carvajal Barreto
 Versión: 2.0.0
 ==============================================================
 """
