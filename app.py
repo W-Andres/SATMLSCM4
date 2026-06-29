@@ -7,7 +7,7 @@ basado en el Modelo SAT-ML para la Optimización de Inventarios
 en Centros de Distribución (CEDIs).
 
 Trabajo de Grado 3 — Modelos de Innovación
-Ingeniería de Sistemas — Fundación Universitaria Compensar
+Ingeniería de Sistemas — CUN: Corporación Unificada Nacional de Educación Superior
 
 Autor : Wilson Andrés Carvajal Barreto
 Versión: 2.0.0
