@@ -1,7 +1,7 @@
 # SAT-ML SCM v2.0
 Sistema Inteligente de Analítica Predictiva Logística  
 Trabajo de Grado 3 — Ingeniería de Sistemas  
-Autor: Wilson Andrés Carbajal Barreto
+Autor: Wilson Andrés Carvajal Barreto
 
 ## Credenciales de demo
 | Usuario | Contraseña | Rol |
