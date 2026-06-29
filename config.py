@@ -26,7 +26,7 @@ APP_NAME = "SAT-ML SCM"
 
 APP_VERSION = "2.0.0"
 
-AUTHOR = "Wilson Andrés Carbajal Barreto"
+AUTHOR = "Wilson Andrés Carvajal Barreto"
 
 UNIVERSIDAD = "Fundación Universitaria Compensar"
 
